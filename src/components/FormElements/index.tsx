@@ -69,7 +69,6 @@ const FormElements = () => {
       //   fileName: file.name,
       //   fileURL: fileUrl,
       // });
-      console.log("helllo")
       console.log('File URL:', fileUrl);
       // console.log('Firestore Document ID:', docRef.id);
     } catch (error) {
