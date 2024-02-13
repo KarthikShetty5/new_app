@@ -69,8 +69,18 @@ const FormElements = () => {
       //   fileName: file.name,
       //   fileURL: fileUrl,
       // });
-      console.log('File URL:', fileUrl);
+      console.log('file', fileUrl);
       // console.log('Firestore Document ID:', docRef.id);
+      const res = await fetch("http://localhost:8000/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          
+        },
+        body: JSON.stringify({ "file": fileUrl }),
+      });
+      const { translatedText } = await res.json();
+      console.log("sent already bro ")
     } catch (error) {
       toast.error('Error uploading file !', {
         position: "top-left",
