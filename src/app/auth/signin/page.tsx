@@ -2,21 +2,10 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-<<<<<<< HEAD
 import 'react-toastify/dist/ReactToastify.css';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from '../../../config/firebase'
 import { ToastContainer, toast } from 'react-toastify';
-=======
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
-
-export const metadata: Metadata = {
-  title: "Next.js SignIn Page | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Signin Page TailAdmin Dashboard Template",
-};
->>>>>>> 57fc94bad53a69e147593b6744a3dd083d375c46
 
 const SignIn: React.FC = () => {
   const [email, setEmail]: any = useState("");

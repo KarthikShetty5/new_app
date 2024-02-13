@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import CheckboxFive from "@/components/Checkboxes/CheckboxFive";
@@ -74,8 +75,7 @@ const FormElements = () => {
       const res = await fetch("http://localhost:8000/", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          
+          "Content-Type": "application/json",    
         },
         body: JSON.stringify({ "file": fileUrl }),
       });

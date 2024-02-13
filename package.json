@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "fastapi-dev": "uvicorn main:app --reload",
     "build": "next build",
-    "start": "next start",
+    "start": "concurrently \"npm run dev\" \"npm run fastapi-dev\"",
     "lint": "next lint"
   },
   "dependencies": {
