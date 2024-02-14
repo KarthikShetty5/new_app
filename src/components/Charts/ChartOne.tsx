@@ -135,7 +135,7 @@ const ChartOne: React.FC = ({ prop }) => {
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
-        name: "You",
+        name: "People",
         data: uniqueMonthNumber,
       },
     ],
@@ -157,11 +157,11 @@ const ChartOne: React.FC = ({ prop }) => {
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
             </span>
             <div className="w-full">
-              <p className="font-semibold text-primary">Total Revenue</p>
-              <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
+              <p className="font-semibold text-primary">No. of People Visited</p>
+              <p className="text-sm font-medium">Yearly</p>
             </div>
           </div>
-          <div className="flex min-w-47.5">
+          {/* <div className="flex min-w-47.5">
             <span className="mr-2 mt-1 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-secondary">
               <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-secondary"></span>
             </span>
@@ -169,9 +169,9 @@ const ChartOne: React.FC = ({ prop }) => {
               <p className="font-semibold text-secondary">Total Sales</p>
               <p className="text-sm font-medium">12.04.2022 - 12.05.2022</p>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="flex w-full max-w-45 justify-end">
+        {/* <div className="flex w-full max-w-45 justify-end">
           <div className="inline-flex items-center rounded-md bg-whiter p-1.5 dark:bg-meta-4">
             <button className="rounded bg-white px-3 py-1 text-xs font-medium text-black shadow-card hover:bg-white hover:shadow-card dark:bg-boxdark dark:text-white dark:hover:bg-boxdark">
               Day
@@ -183,7 +183,7 @@ const ChartOne: React.FC = ({ prop }) => {
               Month
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>

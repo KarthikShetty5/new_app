@@ -8,11 +8,6 @@ import { Auth, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPasswo
 import { auth, googleProvider } from '../../../config/firebase'
 import { useRouter } from 'next/navigation'
 
-<<<<<<< HEAD
-=======
-import { Metadata } from "next";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
->>>>>>> 57fc94bad53a69e147593b6744a3dd083d375c46
 
 
 const SignUp: React.FC = () => {

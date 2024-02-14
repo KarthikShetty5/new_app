@@ -12,13 +12,13 @@ interface ChartTwoState {
 const ChartTwo: React.FC = ({ prop }) => {
 
   const jsonData = JSON.parse(prop);
-  const uniqueMonths = Array.from(new Set(jsonData.map((i) => i.Month)));
+  const uniqueYear = Array.from(new Set(jsonData.map((i) => i.year)));
 
-  const categories = uniqueMonths.map((month) => {
-    return month.substring(0, 1);
+  const categories = uniqueYear.map((year) => {
+    return year;
   });
 
-  const uniqueMonthNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
+  const uniqueYearNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
   )));
 
   const options: ApexOptions = {
@@ -84,8 +84,8 @@ const ChartTwo: React.FC = ({ prop }) => {
   const [state, setState] = useState<ChartTwoState>({
     series: [
       {
-        name: "Sales",
-        data: uniqueMonthNumber,
+        name: "People",
+        data: uniqueYearNumber,
       },
       // {
       //   name: "Revenue",
@@ -106,7 +106,7 @@ const ChartTwo: React.FC = ({ prop }) => {
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Profit this week
+            Yearly Visited
           </h4>
         </div>
         <div>

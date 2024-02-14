@@ -153,6 +153,29 @@ async def get_search(item: str):
         print(f"Failed to download file. Status code: {response.status_code}")
 
 
+@app.get('/data/year')
+async def get_year():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df1 = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            df1=df1.fillna('-')
+            df1[df1['Date'].str.contains(r'[^0-9.-]')==True]
+            df1['Date'].replace('07.04,22','07.04.22',inplace=True)
+            df1=df1[df1[ 'Date']!='-']
+            df1[ 'Date']= pd.to_datetime(df1[ 'Date'] , format='%d.%m.%y')
+            df1['Month'] = df1[ 'Date'].dt.strftime('%B')
+            df1['Date']= pd.to_datetime(df1['Date'] , format='%d.%m.%y')
+            df1['year'] = df1[ 'Date'].dt.year
+            year_analysis=df1.groupby(['year']).count()['Name'].reset_index()
+            year_analysis.rename(columns={'Name':'Number of people'},inplace=True)
+            return convert_to_json(year_analysis)
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+
 def search_data(df1, search_keyword):
     def search_data1(search_keyword):
         df1['Areas of interest'] = df1['Areas of interest'].fillna('')
