@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 
-
 interface ChartOneState {
   series: {
     name: string;
@@ -11,18 +10,27 @@ interface ChartOneState {
   }[];
 }
 
-const ChartOne: React.FC = ({ data }: any) => {
+const ChartOne: React.FC = ({ prop }) => {
 
-  const [done, setDone] = useState(false);
+  const jsonData = JSON.parse(prop);
+  const uniqueMonths = Array.from(new Set(jsonData.map((i) => i.Month)));
 
+  const categories = uniqueMonths.map((month) => {
+    return month.substring(0, 3);
+  });
 
-  // useEffect(() => {
-  //   getter();
-  // }, [done]);
+  const uniqueMonthNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
+  )));
+  // const categories = uniqueMonths.map((month) => {
+  //   return month.substring(0, 3);
+  // });
 
   useEffect(() => {
-    console.log(data)
-  }, [data]);
+    console.log(JSON.parse(prop))
+    JSON.parse(prop).forEach((i) => {
+      console.log(i.Month)
+    })
+  })
 
   const options: ApexOptions = {
     legend: {
@@ -105,20 +113,7 @@ const ChartOne: React.FC = ({ data }: any) => {
     },
     xaxis: {
       type: "category",
-      categories: [
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-      ],
+      categories: categories,
       axisBorder: {
         show: false,
       },
@@ -133,20 +128,15 @@ const ChartOne: React.FC = ({ data }: any) => {
         },
       },
       min: 0,
-      max: 100,
+      max: 30,
     },
   };
 
   const [state, setState] = useState<ChartOneState>({
     series: [
       {
-        name: "Product One",
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30, 45],
-      },
-
-      {
-        name: "Product Two",
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39, 51],
+        name: "You",
+        data: uniqueMonthNumber,
       },
     ],
   });
@@ -210,18 +200,4 @@ const ChartOne: React.FC = ({ data }: any) => {
   );
 };
 
-export async function getServerSideProps(context) {
-  const response = await fetch("http://localhost:8000/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ file: "https://firebasestorage.googleapis.com/v0/b/newproject-d16a4.appspot.com/o/uploads%2FNETWORK_DATABASE_-_NETWORK_DATABASE.csv?alt=media&token=151ee8aa-2fa9-476c-9d96-4df10393bc18" }),
-  });
-  const dat = await response.json();
-  console.log(dat)
-  return {
-    props: { data: JSON.parse(JSON.stringify(dat)) }
-  }
-}
 export default ChartOne;

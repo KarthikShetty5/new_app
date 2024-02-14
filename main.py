@@ -30,12 +30,41 @@ app.add_middleware(
 )
 
 
+file_url_storage = None
+
+# @app.post('/')
+# async def root(item:Item):
+#     response = requests.get(item.file, allow_redirects=True)
+#     if response.status_code == 200:
+#         if response.text.strip():
+#             # global df
+#             df = pd.read_csv(StringIO(response.text), encoding='utf-8')
+#             # json_data = peoandmonth(df)
+#             # return JSONResponse(json_data)
+#             global file_url_storage
+#             file_url_storage = item.file
+#             # print(df.head())
+#         else:
+#             print("CSV content is empty.")
+#     else:
+#         print(f"Failed to download file. Status code: {response.status_code}")
+#     return item.file
+
 @app.post('/')
 async def root(item:Item):
     response = requests.get(item.file, allow_redirects=True)
     if response.status_code == 200:
+            global file_url_storage
+            file_url_storage = item.file
+    else:
+        print(f"Failed to get file link: {response.status_code}")
+    return item.file
+
+@app.get('/data/people')
+async def get_people():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
         if response.text.strip():
-            global df
             df = pd.read_csv(StringIO(response.text), encoding='utf-8')
             json_data = peoandmonth(df)
             return JSONResponse(json_data)
@@ -43,7 +72,20 @@ async def root(item:Item):
             print("CSV content is empty.")
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
-    return item.file
+
+
+@app.get('/data/other')
+async def get_other():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            print(df.head())
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
 
 def convert_to_json(data):
     data = data.to_dict(orient='records')
@@ -99,5 +141,5 @@ async def get_data():
 
 @app.get('/api/d')
 async def get_d():
-    dat=df.head()
+    dat=file_url_storage
     return dat

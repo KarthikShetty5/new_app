@@ -67,9 +67,15 @@ const FormElements = () => {
         progress: undefined,
       });
       console.log('file', fileUrl);
-      // const jsonData = JSON.parse(data);
-      // console.log(JSON.stringify(jsonData, null, 4))
-
+      const response = await fetch("http://localhost:8000/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ file: fileUrl }),
+      });
+      const dat = await response.json();
+      console.log(dat)
     } catch (error) {
       toast.error('Error uploading file !', {
         position: "top-left",
