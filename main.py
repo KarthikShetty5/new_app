@@ -139,7 +139,33 @@ async def get_data():
     }
     return data
 
-@app.get('/api/d')
-async def get_d():
-    dat=file_url_storage
-    return dat
+@app.get('/data/search')
+async def get_search(item: str):
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            search_results = search_data(df, item)
+            return search_results
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+
+def search_data(df1, search_keyword):
+    def search_data1(search_keyword):
+        df1['Areas of interest'] = df1['Areas of interest'].fillna('')
+        filtered_data = df1[df1['Areas of interest'].str.contains(search_keyword, case=False)]
+        return filtered_data
+    df1=search_data1(search_keyword)
+    df_search = df1[
+    (df1['Name'].str.contains(search_keyword, case=False)) |
+    (df1['Company'].str.contains(search_keyword, case=False)) |
+    (df1['Designation'].str.contains(search_keyword, case=False)) |
+    (df1['Areas of interest'].str.contains(search_keyword, case=False))
+]
+    columns_to_display = ['Name', 'Date', 'Designation', 'Company', 'Areas of interest','Linkedin']
+    search_results = df_search[columns_to_display]
+
+    return search_results

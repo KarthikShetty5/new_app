@@ -8,17 +8,25 @@ import Loader from "../common/Loader";
 
 const Chart: React.FC = () => {
   const [people, setpeople] = useState();
+  const [other, setOther] = useState();
 
   async function getpeople() {
     const res = await fetch(`http://localhost:8000/data/people`)
     return res.json()
   }
 
+  async function getother() {
+    const res = await fetch(`http://localhost:8000/data/people`)
+    return res.json()
+  }
+
   const peopleData = getpeople()
+  const otherData = getother()
 
   async function setter() {
-    const [people] = await Promise.all([peopleData])
+    const [people, other] = await Promise.all([peopleData, otherData])
     setpeople(people)
+    setOther(other)
   }
 
   useEffect(() => {
@@ -35,7 +43,11 @@ const Chart: React.FC = () => {
         ) : (
           <Loader />
         )}
-        <ChartTwo />
+        {other ? (
+          <ChartTwo prop={other} />
+        ) : (
+          <Loader />
+        )}
         <ChartThree />
       </div>
     </>
