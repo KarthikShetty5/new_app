@@ -1,6 +1,6 @@
 import re
-import nltk
 import json
+import nltk
 import requests
 import numpy as np
 import pandas as pd
@@ -13,6 +13,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import sent_tokenize 
 from nltk.tokenize import word_tokenize 
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
 
 app = FastAPI()
 
@@ -27,19 +29,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.post('/')
 async def root(item:Item):
     response = requests.get(item.file, allow_redirects=True)
     if response.status_code == 200:
         if response.text.strip():
+            global df
             df = pd.read_csv(StringIO(response.text), encoding='utf-8')
-            peoandmonth(df)
+            json_data = peoandmonth(df)
+            return JSONResponse(json_data)
         else:
             print("CSV content is empty.")
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
     return item.file
-
 
 def convert_to_json(data):
     data = data.to_dict(orient='records')
@@ -62,7 +66,6 @@ def clean_text1(text):
     else:
         return text
     
-
 def peoandmonth(df):
     df1=df.copy()
     df1=df1.fillna('-')
@@ -83,5 +86,18 @@ def peoandmonth(df):
     df1['year'] = df1[ 'Date'].dt.year
     month_analysis=df1.groupby(['Month']).count()['Name'].reset_index()
     month_analysis.rename(columns={'Name':'Number of people'},inplace=True)
-    res = convert_to_json(month_analysis)
-    print(res)
+    return convert_to_json(month_analysis)
+
+
+@app.get('/api/data')
+async def get_data():
+    data = {
+        'key1': 'value1',
+        'key2': 'value2',
+    }
+    return data
+
+@app.get('/api/d')
+async def get_d():
+    dat=df.head()
+    return dat
