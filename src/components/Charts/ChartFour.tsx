@@ -9,20 +9,30 @@ interface ChartFourState {
     }[];
 }
 
-const ChartFour: React.FC = ({ prop }: any) => {
+interface ChartOneProps {
+    prop: string; // Assuming your prop is a JSON string
+}
 
-    const jsonData = JSON.parse(prop);
-    const allPlatforms: any = [];
-    jsonData.forEach((item: any) => {
+interface ChartData {
+    Platform: string;
+    "Number of people": number;
+}
+
+const ChartFour: React.FC<ChartOneProps> = ({ prop }) => {
+
+    const jsonData: ChartData[] = JSON.parse(prop);
+
+    const allPlatforms = [];
+    jsonData.forEach((item) => {
         const platform = item.Platform;
         if (!allPlatforms.includes(platform)) {
             allPlatforms.push(platform);
         } else {
-            allPlatforms.push({ value: platform, isDuplicate: true });
+            allPlatforms.push(platform);
         }
     });
-    const uniqueYearNumber: any = [];
-    jsonData.forEach((item: any) => {
+    const uniqueYearNumber = [];
+    jsonData.forEach((item) => {
         const number = item['Number of people'];
         if (!uniqueYearNumber.includes(number)) {
             uniqueYearNumber.push(number);
