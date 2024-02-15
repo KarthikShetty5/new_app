@@ -9,7 +9,6 @@ import { auth, googleProvider } from '../../../config/firebase'
 import { useRouter } from 'next/navigation'
 
 
-
 const SignUp: React.FC = () => {
 
     const [email, setEmail]: any = useState("");

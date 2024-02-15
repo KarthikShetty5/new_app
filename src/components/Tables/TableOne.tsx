@@ -1,8 +1,10 @@
 import { BRAND } from "@/types/brand";
 import Image from "next/image";
 
-
-const TableOne = ({ prop }) => {
+interface ChartOneProps {
+  prop: string; // Assuming your prop is a JSON string
+}
+const TableOne: React.FC<ChartOneProps> = ({ prop }) => {
 
   const jsonData = JSON.parse(prop);
   const uniqueCompany = Array.from(new Set(jsonData.map((i) => i)));

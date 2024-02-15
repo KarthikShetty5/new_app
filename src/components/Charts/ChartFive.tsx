@@ -10,13 +10,13 @@ interface ChartFiveState {
     }[];
 }
 
-const ChartFive: React.FC = ({ prop }) => {
+const ChartFive: React.FC = ({ prop }: any) => {
 
     const jsonData = JSON.parse(prop);
-    const uniqueDesignation = Array.from(new Set(jsonData.map((i) => i.Designation)));
+    const uniqueDesignation = Array.from(new Set(jsonData.map((i: any) => i.Designation)));
 
-    const uniqueCount = [];
-    jsonData.forEach((item) => {
+    const uniqueCount: any = [];
+    jsonData.forEach((item: any) => {
         const count = item.Count;
         if (!uniqueCount.includes(count)) {
             uniqueCount.push(count);

@@ -1,3 +1,4 @@
+// @ts-ignore
 import { ApexOptions } from "apexcharts";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
@@ -10,9 +11,18 @@ interface ChartOneState {
   }[];
 }
 
-const ChartOne: React.FC = ({ prop }) => {
+interface ChartData {
+  Month: string;
+  "Number of people": number;
+}
 
-  const jsonData = JSON.parse(prop);
+interface ChartOneProps {
+  prop: string;
+}
+
+const ChartOne: React.FC<ChartOneProps> = ({ prop }) => {
+
+  const jsonData: ChartData[] = JSON.parse(prop);
   const uniqueMonths = Array.from(new Set(jsonData.map((i) => i.Month)));
 
   const categories = uniqueMonths.map((month) => {
@@ -21,16 +31,7 @@ const ChartOne: React.FC = ({ prop }) => {
 
   const uniqueMonthNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
   )));
-  // const categories = uniqueMonths.map((month) => {
-  //   return month.substring(0, 3);
-  // });
 
-  useEffect(() => {
-    console.log(JSON.parse(prop))
-    JSON.parse(prop).forEach((i) => {
-      console.log(i.Month)
-    })
-  })
 
   const options: ApexOptions = {
     legend: {

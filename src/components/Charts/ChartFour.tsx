@@ -9,11 +9,11 @@ interface ChartFourState {
     }[];
 }
 
-const ChartFour: React.FC = ({ prop }) => {
+const ChartFour: React.FC = ({ prop }: any) => {
 
     const jsonData = JSON.parse(prop);
-    const allPlatforms = [];
-    jsonData.forEach((item) => {
+    const allPlatforms: any = [];
+    jsonData.forEach((item: any) => {
         const platform = item.Platform;
         if (!allPlatforms.includes(platform)) {
             allPlatforms.push(platform);
@@ -21,8 +21,8 @@ const ChartFour: React.FC = ({ prop }) => {
             allPlatforms.push({ value: platform, isDuplicate: true });
         }
     });
-    const uniqueYearNumber = [];
-    jsonData.forEach((item) => {
+    const uniqueYearNumber: any = [];
+    jsonData.forEach((item: any) => {
         const number = item['Number of people'];
         if (!uniqueYearNumber.includes(number)) {
             uniqueYearNumber.push(number);
@@ -30,10 +30,6 @@ const ChartFour: React.FC = ({ prop }) => {
             uniqueYearNumber.push(number);
         }
     });
-
-    // useEffect(() => {
-    //     console.log(uniqueYearNumber, allPlatforms)
-    // })
 
     const options: ApexOptions = {
         legend: {

@@ -8,7 +8,11 @@ import Loader from "../common/Loader";
 import ChartFour from "./ChartFour";
 import ChartFive from "./ChartFive";
 
-const Chart: React.FC = () => {
+interface ChartOneProps {
+  prop: string; 
+}
+
+const Chart: React.FC<ChartOneProps> = () => {
   const [people, setpeople] = useState();
   const [senti, setSenti] = useState();
   const [year, setYear] = useState();

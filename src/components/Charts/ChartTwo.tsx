@@ -9,9 +9,18 @@ interface ChartTwoState {
   }[];
 }
 
-const ChartTwo: React.FC = ({ prop }) => {
+interface ChartData {
+  year: string;
+  "Number of people": number;
+}
 
-  const jsonData = JSON.parse(prop);
+interface ChartOneProps {
+  prop: string;
+}
+
+
+const ChartTwo: React.FC<ChartOneProps> = ({ prop }) => {
+  const jsonData: ChartData[] = JSON.parse(prop);
   const uniqueYear = Array.from(new Set(jsonData.map((i) => i.year)));
 
   const categories = uniqueYear.map((year) => {

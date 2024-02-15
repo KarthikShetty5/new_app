@@ -3,13 +3,21 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface ChartThreeState {
-  series: Numbers[];
+  series: Number[];
+}
+
+interface ChartData {
+  Numbers: number
+}
+
+interface ChartOneProps {
+  prop: string;
 }
 
 
-const ChartThree: React.FC = ({ prop }) => {
+const ChartThree: React.FC<ChartOneProps> = ({ prop }) => {
 
-  const jsonData = JSON.parse(prop);
+  const jsonData: ChartData[] = JSON.parse(prop);
   useEffect(() => {
     console.log(jsonData)
   })
