@@ -14,12 +14,12 @@ interface ChartData {
   "Number of people": number;
 }
 
-interface ChartOneProps {
+interface ChartTwoProps {
   prop: string;
 }
 
 
-const ChartTwo: React.FC<ChartOneProps> = ({ prop }) => {
+const ChartTwo: React.FC<ChartTwoProps> = ({ prop }) => {
   const jsonData: ChartData[] = JSON.parse(prop);
   const uniqueYear = Array.from(new Set(jsonData.map((i) => i.year)));
 

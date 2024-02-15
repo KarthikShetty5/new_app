@@ -9,8 +9,8 @@ interface ChartFourState {
     }[];
 }
 
-interface ChartOneProps {
-    prop: string; // Assuming your prop is a JSON string
+interface ChartFourProps {
+    prop: string;
 }
 
 interface ChartData {
@@ -18,11 +18,11 @@ interface ChartData {
     "Number of people": number;
 }
 
-const ChartFour: React.FC<ChartOneProps> = ({ prop }) => {
+const ChartFour: React.FC<ChartFourProps> = ({ prop }) => {
 
     const jsonData: ChartData[] = JSON.parse(prop);
 
-    const allPlatforms = [];
+    const allPlatforms: string[] = [];
     jsonData.forEach((item) => {
         const platform = item.Platform;
         if (!allPlatforms.includes(platform)) {
@@ -31,7 +31,7 @@ const ChartFour: React.FC<ChartOneProps> = ({ prop }) => {
             allPlatforms.push(platform);
         }
     });
-    const uniqueYearNumber = [];
+    const uniqueYearNumber: number[] = [];
     jsonData.forEach((item) => {
         const number = item['Number of people'];
         if (!uniqueYearNumber.includes(number)) {

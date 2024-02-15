@@ -10,13 +10,23 @@ interface ChartFiveState {
     }[];
 }
 
-const ChartFive: React.FC = ({ prop }: any) => {
+interface ChartFiveProps {
+    prop: string;
+}
 
-    const jsonData = JSON.parse(prop);
-    const uniqueDesignation = Array.from(new Set(jsonData.map((i: any) => i.Designation)));
+interface ChartData {
+    Designation: string;
+    Count: number;
+}
 
-    const uniqueCount: any = [];
-    jsonData.forEach((item: any) => {
+
+const ChartFive: React.FC<ChartFiveProps> = ({ prop }) => {
+
+    const jsonData: ChartData[] = JSON.parse(prop);
+    const uniqueDesignation = Array.from(new Set(jsonData.map((i) => i.Designation)));
+
+    const uniqueCount: number[] = [];
+    jsonData.forEach((item) => {
         const count = item.Count;
         if (!uniqueCount.includes(count)) {
             uniqueCount.push(count);

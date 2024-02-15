@@ -2,17 +2,13 @@
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import ChartOne from "@/components/Charts/ChartOne";
 import ChartTwo from "@/components/Charts/ChartTwo";
-import ChartThree from "@/components/Charts/ChartThree";
+// import ChartThree from "@/components/Charts/ChartThree";
 import React, { useEffect, useState } from "react";
 import Loader from "../common/Loader";
 import ChartFour from "./ChartFour";
 import ChartFive from "./ChartFive";
 
-interface ChartOneProps {
-  prop: string; 
-}
-
-const Chart: React.FC<ChartOneProps> = () => {
+const Chart: React.FC = () => {
   const [people, setpeople] = useState();
   const [senti, setSenti] = useState();
   const [year, setYear] = useState();
@@ -80,12 +76,12 @@ const Chart: React.FC<ChartOneProps> = () => {
         ) : (
           <Loader />
         )}
-        {year ? (
+        {/* {year ? (
           <ChartThree prop={senti} />
         ) : (
           <Loader />
-        )}
-        {senti ? (
+        )} */}
+        {year ? (
           <ChartTwo prop={year} />
         ) : (
           <Loader />

@@ -4,20 +4,35 @@ import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import Link from 'next/link';
 import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import { Card, CardHeader, CardBody, CardFooter, Avatar, Button } from "@nextui-org/react";
+interface SearchState {
+    Name: Record<string, string>;
+    Date: Record<string, string>;
+    Designation: Record<string, string>;
+    Company: Record<string, string>;
+    "Areas of interest": Record<string, string>;
+    Linkedin: Record<string, string>; 
+}
 
 const HomePage = () => {
-    const CustomAvatar = ({ name }) => {
-        const firstLetter = name.charAt(0).toUpperCase();
-        return (
-            <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full mr-3">
-                {firstLetter}
-            </div>
-        );
-    };
+    // const CustomAvatar = ({ name }: string) => {
+    //     const firstLetter = name.charAt(0).toUpperCase();
+    //     return (
+    //         <div className="w-10 h-10 bg-blue-500 text-white flex items-center justify-center rounded-full mr-3">
+    //             {firstLetter}
+    //         </div>
+    //     );
+    // };
 
-    const [search, setSearch] = useState({});
+    const [search, setSearch] = useState<SearchState>({
+        Name: {},
+        Date: {},
+        Designation: {},
+        Company: {},
+        "Areas of interest": {},
+        Linkedin: {}
+    });
     const [searchTerm, setSearchTerm] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState<string[]>([]);
     const [done, setDone] = useState(false);
 
     // Fetch data from the API based on the search term
@@ -109,7 +124,7 @@ const HomePage = () => {
                             <Card key={key} className="w-[500px] border border-primary-200 p-4 bg-slate-200 rounded-3xl">
                                 <CardHeader className="justify-between">
                                     <div className="flex gap-3 items-center">
-                                        <CustomAvatar name={search["Name"][key]} />
+                                        {/* <CustomAvatar name={search["Name"][key]} /> */}
                                         <div className="flex flex-col gap-1">
                                             <h5 className="text-small font-semibold text-slate-950">
                                                 {search["Name"][key]}
