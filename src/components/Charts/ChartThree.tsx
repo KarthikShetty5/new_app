@@ -3,21 +3,25 @@ import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface ChartThreeState {
-  series: number[];
+  series: Numbers[];
 }
 
 
 const ChartThree: React.FC = ({ prop }) => {
 
   const jsonData = JSON.parse(prop);
-  const uniqueYear = Array.from(new Set(jsonData.map((i) => i.year)));
+  useEffect(() => {
+    console.log(jsonData)
+  })
+  const uniqueNumbers = Array.from(new Set(jsonData.map((i) => i.Numbers)));
 
-  const categories = uniqueYear.map((year) => {
-    return year;
+  const categories = uniqueNumbers.map((Numbers) => {
+    return Numbers;
   });
 
-  const uniqueYearNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
-  )));
+  useEffect(() => {
+    console.log(uniqueNumbers, categories)
+  })
 
 
   const options: ApexOptions = {
@@ -26,7 +30,7 @@ const ChartThree: React.FC = ({ prop }) => {
       type: "pie",
     },
     colors: ["#3C50E0", "#6577F3", "#8FD0EF", "#0FADCF"],
-    labels: uniqueYearNumber,
+    labels: categories,
     legend: {
       show: false,
       position: "bottom",
@@ -64,13 +68,13 @@ const ChartThree: React.FC = ({ prop }) => {
   };
 
   const [state, setState] = useState<ChartThreeState>({
-    series: [65, 34, 12, 56],
+    series: categories,
   });
 
   const handleReset = () => {
     setState((prevState) => ({
       ...prevState,
-      series: [65, 34, 12, 56],
+      series: categories,
     }));
   };
   handleReset;
@@ -80,7 +84,7 @@ const ChartThree: React.FC = ({ prop }) => {
       <div className="mb-3 justify-between gap-4 sm:flex">
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Visitors Analytics
+            Sentiment Analysis
           </h5>
         </div>
         <div>
@@ -91,10 +95,10 @@ const ChartThree: React.FC = ({ prop }) => {
               className="relative z-20 inline-flex appearance-none bg-transparent py-1 pl-3 pr-8 text-sm font-medium outline-none"
             >
               <option value="" className="dark:bg-boxdark">
-                yearly
+                Numbersly
               </option>
               <option value="" className="dark:bg-boxdark">
-                Yearly
+                Numbersly
               </option>
             </select>
             <span className="absolute right-3 top-1/2 z-10 -translate-y-1/2">

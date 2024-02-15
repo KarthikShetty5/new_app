@@ -5,11 +5,16 @@ import ChartTwo from "@/components/Charts/ChartTwo";
 import ChartThree from "@/components/Charts/ChartThree";
 import React, { useEffect, useState } from "react";
 import Loader from "../common/Loader";
+import ChartFour from "./ChartFour";
+import ChartFive from "./ChartFive";
 
 const Chart: React.FC = () => {
   const [people, setpeople] = useState();
-  const [other, setOther] = useState();
+  const [senti, setSenti] = useState();
   const [year, setYear] = useState();
+  const [plat, setPlat] = useState();
+  const [loading, setLoading] = useState(true);
+  const [desig, setDesig] = useState()
 
   async function getpeople() {
     const res = await fetch(`http://localhost:8000/data/people`)
@@ -21,20 +26,34 @@ const Chart: React.FC = () => {
     return res.json()
   }
 
-  async function getother() {
-    const res = await fetch(`http://localhost:8000/data/people`)
+  async function getsenti() {
+    const res = await fetch(`http://localhost:8000/data/senti`)
+    return res.json()
+  }
+  async function getplat() {
+    const res = await fetch(`http://localhost:8000/data/inter`)
+    return res.json()
+  }
+
+  async function getdesig() {
+    const res = await fetch(`http://localhost:8000/data/desig`)
     return res.json()
   }
 
   const peopleData = getpeople()
-  const otherData = getother()
+  const sentiData = getsenti()
   const yearData = getyear()
+  const platData = getplat()
+  const desigData = getdesig()
 
   async function setter() {
-    const [people, other, year] = await Promise.all([peopleData, otherData, yearData])
+    const [people, senti, year, plat, desig] = await Promise.all([peopleData, sentiData, yearData, platData, desigData])
     setpeople(people)
-    setOther(other)
+    setSenti(senti)
     setYear(year)
+    setPlat(plat)
+    setDesig(desig)
+    setLoading(false);
   }
 
   useEffect(() => {
@@ -52,14 +71,23 @@ const Chart: React.FC = () => {
         ) : (
           <Loader />
         )}
-        {other ? (
+        {plat ? (
+          <ChartFour prop={plat} />
+        ) : (
+          <Loader />
+        )}
+        {year ? (
+          <ChartThree prop={senti} />
+        ) : (
+          <Loader />
+        )}
+        {senti ? (
           <ChartTwo prop={year} />
         ) : (
           <Loader />
         )}
-
-        {year ? (
-          <ChartThree prop={year} />
+        {desig ? (
+          <ChartFive prop={desig} />
         ) : (
           <Loader />
         )}

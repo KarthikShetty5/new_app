@@ -176,6 +176,89 @@ async def get_year():
         print(f"Failed to download file. Status code: {response.status_code}")
 
 
+
+@app.get('/data/senti')
+async def get_senti():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df1 = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            df1['Sentiment'] = df1['Insights'].apply(lambda x: TextBlob(str(x)).sentiment.polarity)
+            df1['Sentiment'] = pd.to_numeric(df1['Sentiment'])
+            df1['Sentiment']=np.where(df1['Sentiment'] > 0,'Positive',np.where(df1['Sentiment'] < 0,'Negative',np.where(df1['Sentiment'] == 0,'Neutral','Undefined')))
+            senti_count=df1.groupby('Sentiment',as_index=True).count()['Name']
+            senti_count.reset_index()
+            senti_count_df=pd.DataFrame(senti_count)
+            senti_count_df.rename(columns={'Name':'Numbers'},inplace=True)
+            return convert_to_json(senti_count_df)
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+
+
+@app.get('/data/inter')
+async def get_interaction():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df1 = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            df1['Platform'].replace('lunchclub','lunch club',inplace=True)
+            df1['Platform'].replace('suhas ref','suhas',inplace=True)
+            platform_list=df1.groupby(['Platform']).count()['Name'].reset_index()
+            platform_list.rename(columns={'Name':'Number of people'},inplace=True)
+            return convert_to_json(platform_list)
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+@app.get('/data/table')
+async def get_table():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df1 = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            top_10_clients = df1.head(10)[[ 'Date', 'Company', 'Place', 'Platform']]
+            top_10_clients_reset = top_10_clients.reset_index(drop=True)
+            top_10_clients_reset.index += 1
+            return convert_to_json(top_10_clients_reset)
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+
+@app.get('/data/desig')
+async def get_designation():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df1 = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            stop_words = ['and', 'the', 'in', 'on', 'a', 'is', 'there', 'of', 'head']
+            def remove_stop_word(text):
+                if isinstance(text, str):
+                    words = text.split()
+                    filter_words = [word for word in words if word.lower() not in stop_words]
+                    return ' '.join(filter_words)
+                else:
+                    return str(text)
+            df1['Designation'] = df1['Designation'].apply(remove_stop_word)
+            word_counts = df1['Designation'].str.split(expand=True).stack().value_counts()
+            freq = pd.DataFrame({'Designation': word_counts.index, 'Count': word_counts.values})
+            freq = freq.sort_values(by='Count', ascending=False)
+            freq=freq.head(10)
+            return convert_to_json(freq)
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
+
+
+
+
 def search_data(df1, search_keyword):
     def search_data1(search_keyword):
         df1['Areas of interest'] = df1['Areas of interest'].fillna('')

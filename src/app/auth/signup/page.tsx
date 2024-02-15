@@ -32,7 +32,7 @@ const SignUp: React.FC = () => {
                 draggable: true,
                 progress: undefined,
             });
-            router.push('/')
+            router.push('/forms/form-elements')
         } catch (err) {
             toast.error('Failed to SignUp using Google !', {
                 position: "top-left",
@@ -102,7 +102,7 @@ const SignUp: React.FC = () => {
                     draggable: true,
                     progress: undefined,
                 });
-                router.push('/')
+                router.push('/forms/form-elements')
             } catch (err: any) {
                 if (err.message == 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
                     toast.error('Password should be at least 6 characters', { //this is react-toastify which is used to show up notification
@@ -129,7 +129,7 @@ const SignUp: React.FC = () => {
                     });
                     return;
                 }
-                toast.error('Error while signingUp !', { //this is react-toastify which is used to show up notification
+                toast.error('Error while signingUp !', {
                     position: "top-left",
                     autoClose: 1500,
                     hideProgressBar: false,
@@ -140,7 +140,7 @@ const SignUp: React.FC = () => {
                 });
             }
         } else {
-            toast.error('Password do not match !', { //this is react-toastify which is used to show up notification
+            toast.error('Password do not match !', {
                 position: "top-left",
                 autoClose: 1500,
                 hideProgressBar: false,

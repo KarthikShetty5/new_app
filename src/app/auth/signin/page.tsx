@@ -6,10 +6,12 @@ import 'react-toastify/dist/ReactToastify.css';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from '../../../config/firebase'
 import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/navigation'
 
 const SignIn: React.FC = () => {
   const [email, setEmail]: any = useState("");
   const [password, setPassword]: any = useState();
+  const router = useRouter()
 
   const signInGoogle = async (e: any) => {
     e.preventDefault();
@@ -24,6 +26,7 @@ const SignIn: React.FC = () => {
         draggable: true,
         progress: undefined,
       });
+      router.push('/forms/form-elements')
     } catch (err) {
       toast.error('Failed to login using Google !', {
         position: "top-left",
@@ -42,7 +45,7 @@ const SignIn: React.FC = () => {
     try {
       const result = await createUserWithEmailAndPassword(auth, email, password);
       const cred = result.user
-      toast.success('Your are successfully logged in !', { //this is react-toastify which is used to show up notification
+      toast.success('Your are successfully logged in !', {
         position: "top-left",
         autoClose: 1500,
         hideProgressBar: false,
@@ -51,7 +54,7 @@ const SignIn: React.FC = () => {
         draggable: true,
         progress: undefined,
       });
-      localStorage.setItem('token', "cred");
+      router.push('/forms/form-elements')
     } catch (err) {
       toast.error('Invalid Credential !', {
         position: "top-left",
@@ -78,7 +81,7 @@ const SignIn: React.FC = () => {
         draggable
         pauseOnHover
       />
-      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark ">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
             <div className="px-26 py-17.5 text-center">
