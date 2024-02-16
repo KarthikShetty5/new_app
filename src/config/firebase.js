@@ -5,7 +5,7 @@ import { getStorage } from "firebase/storage";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCcHedWZXJBNIdlYNqVCHqxtmLPLEQFkjk",
-    authDomain: "karthikdb-2c9cd.firebaseapp.com",
+    authDomain: "karthikdb.vercel.app",
     projectId: "karthikdb-2c9cd",
     storageBucket: "karthikdb-2c9cd.appspot.com",
     messagingSenderId: "386700003637",
