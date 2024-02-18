@@ -10,7 +10,7 @@ interface SearchState {
     Designation: Record<string, string>;
     Company: Record<string, string>;
     "Areas of interest": Record<string, string>;
-    Linkedin: Record<string, string>; 
+    Linkedin: Record<string, string>;
 }
 
 const HomePage = () => {
@@ -38,7 +38,7 @@ const HomePage = () => {
     // Fetch data from the API based on the search term
     const fetchData = async () => {
         try {
-            const res = await fetch(`http://localhost:8000/data/search?item=${searchTerm}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/search?item=${searchTerm}`);
             const data = await res.json();
             return data;
         } catch (error) {

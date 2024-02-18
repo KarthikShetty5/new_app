@@ -12,12 +12,12 @@ const TablesPage = () => {
   const [tabletwo, settabletwo] = useState();
 
   async function gettableone() {
-    const res = await fetch(`http://localhost:8000/data/table`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/table`)
     return res.json()
   }
 
   async function gettabletwo() {
-    const res = await fetch(`http://localhost:8000/data/table2`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/table2`)
     return res.json()
   }
 

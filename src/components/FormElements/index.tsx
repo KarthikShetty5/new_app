@@ -19,7 +19,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useState } from "react";
 import 'firebase/storage';
 import 'firebase/firestore';
-import firebase from 'firebase/app';
+import { firebase } from 'firebase/app';
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import '../../config/firebase'
@@ -69,7 +69,7 @@ const FormElements = () => {
         progress: undefined,
       });
       console.log('file', fileUrl);
-      const response = await fetch("http://localhost:8000/", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_HOST}/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -17,26 +17,26 @@ const Chart: React.FC = () => {
   const [desig, setDesig] = useState()
 
   async function getpeople() {
-    const res = await fetch(`http://localhost:8000/data/people`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/people`)
     return res.json()
   }
 
   async function getyear() {
-    const res = await fetch(`http://localhost:8000/data/year`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/year`)
     return res.json()
   }
 
   async function getsenti() {
-    const res = await fetch(`http://localhost:8000/data/senti`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/senti`)
     return res.json()
   }
   async function getplat() {
-    const res = await fetch(`http://localhost:8000/data/inter`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/inter`)
     return res.json()
   }
 
   async function getdesig() {
-    const res = await fetch(`http://localhost:8000/data/desig`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/desig`)
     return res.json()
   }
 
