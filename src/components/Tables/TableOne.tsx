@@ -16,7 +16,6 @@ interface ChartData {
 
 
 const TableOne: React.FC<TableOneProps> = ({ prop }) => {
-
   const jsonData: ChartData[] = JSON.parse(prop);
   const uniqueCompany = Array.from(new Set(jsonData.map((i) => i)));
 
@@ -25,7 +24,6 @@ const TableOne: React.FC<TableOneProps> = ({ prop }) => {
       <h4 className="mb-6 text-xl font-semibold text-black dark:text-white">
         Recently Visited
       </h4>
-
       <div className="flex flex-col">
         <div className="grid grid-cols-3 rounded-sm bg-gray-2 dark:bg-meta-4 sm:grid-cols-4">
           <div className="p-2.5 xl:p-5">

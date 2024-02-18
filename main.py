@@ -229,6 +229,23 @@ async def get_table():
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
 
+@app.get('/data/table2')
+async def get_table2():
+    response = requests.get(file_url_storage, allow_redirects=True)
+    if response.status_code == 200:
+        if response.text.strip():
+            df1 = pd.read_csv(StringIO(response.text), encoding='utf-8')
+            df1_sorted = df1.sort_values(by='Date', ascending=False)
+            top_clients = df1_sorted[['Date', 'Company', 'Name', 'Learnings']]
+            top_clients[ 'Learnings'] = top_clients[ 'Learnings'].replace('-', 'No insights available')
+            top_clients_reset = top_clients.reset_index(drop=True)
+            top_clients_reset.index += 1
+            return convert_to_json(top_clients_reset)
+        else:
+            print("CSV content is empty.")
+    else:
+        print(f"Failed to download file. Status code: {response.status_code}")
+
 
 @app.get('/data/desig')
 async def get_designation():
@@ -254,8 +271,6 @@ async def get_designation():
             print("CSV content is empty.")
     else:
         print(f"Failed to download file. Status code: {response.status_code}")
-
-
 
 
 

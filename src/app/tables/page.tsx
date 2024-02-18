@@ -9,17 +9,25 @@ import Loader from "@/components/common/Loader";
 
 const TablesPage = () => {
   const [tableone, settableone] = useState();
+  const [tabletwo, settabletwo] = useState();
 
   async function gettableone() {
     const res = await fetch(`http://localhost:8000/data/table`)
     return res.json()
   }
 
+  async function gettabletwo() {
+    const res = await fetch(`http://localhost:8000/data/table2`)
+    return res.json()
+  }
+
   const tableoneData = gettableone()
+  const tabletwoData = gettabletwo()
 
   async function setter() {
-    const [tableone] = await Promise.all([tableoneData])
+    const [tableone, tabletwo] = await Promise.all([tableoneData, tabletwoData])
     settableone(tableone)
+    settabletwo(tabletwo)
   }
 
   useEffect(() => {
@@ -36,8 +44,12 @@ const TablesPage = () => {
         ) : (
           <Loader />
         )}
+        {tabletwo ? (
+          <TableThree prop={tabletwo} />
+        ) : (
+          <Loader />
+        )}
         <TableTwo />
-        <TableThree />
       </div>
     </DefaultLayout>
   );

@@ -43,7 +43,7 @@ const SignIn: React.FC = () => {
   const signIn = async (e: any) => {
     e.preventDefault();
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await signInWithEmailAndPassword(auth, email, password);
       const cred = result.user
       toast.success('Your are successfully logged in !', {
         position: "top-left",
