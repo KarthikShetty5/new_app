@@ -1,5 +1,6 @@
 import { Package } from "@/types/package";
 import { useEffect, useState } from "react";
+import axios from 'axios';
 
 const packageData: Package[] = [
   {
@@ -36,7 +37,8 @@ interface ChartData {
   Company: string;
   Name: string;
   Learnings: string;
-  packageItem: string[]
+  packageItem: string[];
+  error: string;
 }
 const TableThree: React.FC<TableThreeProps> = ({ prop }) => {
 
@@ -63,6 +65,89 @@ const TableThree: React.FC<TableThreeProps> = ({ prop }) => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    }
+  };
+
+  // const AIhandleDownload = async (packageItem: ChartData) => {
+  //   if (packageItem) {
+  //     try {
+  //       const apiKey = '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';
+  //       const response = await axios.post(
+  //         'https://api.openai.com/v1/engines/gpt-3.5-turbo-0301/completions',
+  //         {
+  //           prompt: `Refine the following insights:\n\nCompany: ${packageItem.Company}\nDate: ${packageItem.Date}\nInsights: ${packageItem.Learnings}\n\n`,
+  //           max_tokens: 200,
+  //           n: 1,
+  //         },
+  //         {
+  //           headers: {
+  //             'Content-Type': 'application/json',
+  //             'Authorization': `Bearer ${apiKey}`,
+  //           },
+  //         }
+  //       );
+
+  //       if (!response.data || response.data.choices.length === 0) {
+  //         throw new Error('Failed to generate refined insights.');
+  //       }
+
+  //       const refinedInsights = response.data.choices[0].text.trim();
+
+  //       const blob = new Blob([refinedInsights], { type: 'text/plain;charset=utf-8' });
+  //       const link = document.createElement('a');
+  //       link.href = URL.createObjectURL(blob);
+  //       link.download = 'refined_insights.txt';
+  //       document.body.appendChild(link);
+  //       link.click();
+  //       document.body.removeChild(link);
+  //     } catch (error) {
+  //       console.error('Error:', error.message);
+  //     }
+  //   }
+  // };
+
+  const handleAIDownload = async (packageItem: ChartData) => {
+    const apiKey = '452767ea12mshb74b97343375335p128f0ajsn4d2ca9abd7c8';
+
+    try {
+      const response = await axios.post(
+        'https://open-ai21.p.rapidapi.com/conversationgpt35',
+        {
+          messages: [
+            {
+              role: 'user',
+              content: `Refine the following insights:\n\nCompany: ${packageItem.Company}\nDate: ${packageItem.Date}\nInsights: ${packageItem.Learnings}\n\n`,
+            },
+          ],
+          web_access: false,
+          system_prompt: '',
+          temperature: 0.9,
+          top_k: 5,
+          top_p: 0.9,
+          max_tokens: 256,
+        },
+        {
+          headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com',
+          },
+        }
+      );
+      console.log(response.data.result)
+      if (response.data && response.data.status) {
+        const refinedInsights = response.data.result;
+
+        const blob = new Blob([refinedInsights], { type: 'text/plain;charset=utf-8' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'refined_insights.txt';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -113,25 +198,26 @@ const TableThree: React.FC<TableThreeProps> = ({ prop }) => {
                   </td>
                   <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                     <div className="flex items-center space-x-3.5">
-                      <button className="hover:text-primary">
-                        <svg
-                          className="fill-current"
-                          width="18"
-                          height="18"
-                          viewBox="0 0 18 18"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M8.99981 14.8219C3.43106 14.8219 0.674805 9.50624 0.562305 9.28124C0.47793 9.11249 0.47793 8.88749 0.562305 8.71874C0.674805 8.49374 3.43106 3.20624 8.99981 3.20624C14.5686 3.20624 17.3248 8.49374 17.4373 8.71874C17.5217 8.88749 17.5217 9.11249 17.4373 9.28124C17.3248 9.50624 14.5686 14.8219 8.99981 14.8219ZM1.85605 8.99999C2.4748 10.0406 4.89356 13.5562 8.99981 13.5562C13.1061 13.5562 15.5248 10.0406 16.1436 8.99999C15.5248 7.95936 13.1061 4.44374 8.99981 4.44374C4.89356 4.44374 2.4748 7.95936 1.85605 8.99999Z"
-                            fill=""
-                          />
-                          <path
-                            d="M9 11.3906C7.67812 11.3906 6.60938 10.3219 6.60938 9C6.60938 7.67813 7.67812 6.60938 9 6.60938C10.3219 6.60938 11.3906 7.67813 11.3906 9C11.3906 10.3219 10.3219 11.3906 9 11.3906ZM9 7.875C8.38125 7.875 7.875 8.38125 7.875 9C7.875 9.61875 8.38125 10.125 9 10.125C9.61875 10.125 10.125 9.61875 10.125 9C10.125 8.38125 9.61875 7.875 9 7.875Z"
-                            fill=""
-                          />
-                        </svg>
-                      </button>
+                      <div className="relative inline-block group">
+                        <button className="group-hover:text-primary" onClick={() => handleAIDownload(packageItem)}>
+                          <svg
+                            className="fill-current"
+                            width="18"
+                            height="18"
+                            viewBox="0 0 18 18"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M9 0C4.029 0 0 4.029 0 9s4.029 9 9 9 9-4.029 9-9-4.029-9-9-9zm0 16.312c-4.18 0-7.562-3.381-7.562-7.562S4.82 1.188 9 1.188 16.562 4.569 16.562 8.75 13.18 16.312 9 16.312zm-.406-3.094a1.188 1.188 0 01-1.188-1.188v-3.75a1.188 1.188 0 012.375 0v3.75a1.188 1.188 0 01-1.187 1.188zM9 7.875a1.688 1.688 0 000 3.375 1.688 1.688 0 000-3.375z"
+                              fill=""
+                            />
+                          </svg>
+                        </button>
+                        <span className="opacity-0 group-hover:opacity-100 bg-gray-800 text-white text-center rounded-md py-2 px-4 absolute bottom-full left-1/2 transform -translate-x-1/2 transition duration-300">
+                          refiner
+                        </span>
+                      </div>
                       <button className="hover:text-primary">
                         <svg
                           className="fill-current"

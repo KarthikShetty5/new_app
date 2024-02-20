@@ -118,7 +118,7 @@ const HomePage = () => {
                             </Card>
                         ))}
                 </div> */}
-                <div className="flex flex-wrap gap-4 justify-around">
+                <div className="flex flex-wrap gap-5 justify-around">
                     {done &&
                         searchResults.map((key) => (
                             <Card key={key} className="w-[500px] border border-primary-200 p-4 bg-slate-200 rounded-3xl">

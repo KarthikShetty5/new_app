@@ -64,32 +64,18 @@ const Chart: React.FC = () => {
   return (
     <>
       <Breadcrumb pageName="Chart" />
-
-      <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        {people ? (
-          <ChartOne prop={people} />
+      <div className="flex items-center justify-center h-full">
+        {(people || plat || year || desig) ? (
+          <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
+            {people && <ChartOne prop={people} />}
+            {plat && <ChartFour prop={plat} />}
+            {year && <ChartTwo prop={year} />}
+            {desig && <ChartFive prop={desig} />}
+          </div>
         ) : (
-          <Loader />
-        )}
-        {plat ? (
-          <ChartFour prop={plat} />
-        ) : (
-          <Loader />
-        )}
-        {/* {year ? (
-          <ChartThree prop={senti} />
-        ) : (
-          <Loader />
-        )} */}
-        {year ? (
-          <ChartTwo prop={year} />
-        ) : (
-          <Loader />
-        )}
-        {desig ? (
-          <ChartFive prop={desig} />
-        ) : (
-          <Loader />
+          <div className="loader-container w-full h-screen">
+            <Loader />
+          </div>
         )}
       </div>
     </>
