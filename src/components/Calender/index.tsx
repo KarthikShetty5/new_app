@@ -1,10 +1,57 @@
+'use client'
+import axios from "axios";
 import Breadcrumb from "../Breadcrumbs/Breadcrumb";
+import { useEffect } from "react";
 
-const Calendar = () => {
+interface TableOneProps {
+  prop: string;
+}
+
+const Calendar: React.FC<TableOneProps> = ({ prop }) => {
+  // const jsonData = JSON.parse(prop);
+
+  const handleAIDownload = async () => {
+    const apiKey = '452767ea12mshb74b97343375335p128f0ajsn4d2ca9abd7c8';
+
+    try {
+      const response = await axios.post(
+        'https://open-ai21.p.rapidapi.com/conversationgpt35',
+        {
+          messages: [
+            {
+              role: 'user',
+              content: `give whether it is MNC or NON-MNC in single word bro please\n\n ${prop}`,
+            },
+          ],
+          web_access: false,
+          system_prompt: '',
+          temperature: 0.9,
+          top_k: 5,
+          top_p: 0.9,
+          max_tokens: 256,
+        },
+        {
+          headers: {
+            'content-type': 'application/json',
+            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com',
+          },
+        }
+      );
+      console.log(response.data.result)
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div className="mx-auto max-w-7xl">
       <Breadcrumb pageName="Calendar" />
+      <button onClick={handleAIDownload}>donwload</button>
 
+      <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d15557.96810845517!2d74.83901575!3d12.87605215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2sin!4v1708586620112!5m2!1sen!2sin" width="600" height="450" className="border-spacing-0" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+      
       {/* <!-- ====== Calendar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <table className="w-full">

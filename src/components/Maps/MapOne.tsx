@@ -1,60 +1,36 @@
-// "use client";
-// import jsVectorMap from "jsvectormap";
-// import "jsvectormap/dist/css/jsvectormap.css";
-// import React, { useEffect } from "react";
-// import "../../js/us-aea-en";
+// components/MapComponent.js
+import React, { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+interface Prop {
+    latitude: number;
+    longitude: Number;
+    locations: Number[]
+}
 
-// const MapOne: React.FC = () => {
-//   useEffect(() => {
-//     const mapOne = new jsVectorMap({
-//       selector: "#mapOne",
-//       map: "us_aea_en",
-//       zoomButtons: true,
+const MapComponent: React.FC<Prop> = ({ locations }) => {
+    const mapRef = useRef(null);
 
-//       regionStyle: {
-//         initial: {
-//           fill: "#C8D0D8",
-//         },
-//         hover: {
-//           fillOpacity: 1,
-//           fill: "#3056D3",
-//         },
-//       },
-//       regionLabelStyle: {
-//         initial: {
-//           fontFamily: "Satoshi",
-//           fontWeight: "semibold",
-//           fill: "#fff",
-//         },
-//         hover: {
-//           cursor: "pointer",
-//         },
-//       },
+    useEffect(() => {
+        if (!mapRef.current) {
+            // Initialize the map
+            const map = L.map('map').setView([locations[0].latitude, locations[0].longitude], 13);
+            mapRef.current = map;
 
-//       labels: {
-//         regions: {
-//           render(code: string) {
-//             return code.split("-")[1];
-//           },
-//         },
-//       },
-//     });
+            // Add OpenStreetMap tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
 
-//     return () => {
-//       mapOne.destroy();
-//     };
-//   }, []);
+            // Add markers for each location in the array
+            locations.forEach(location => {
+                L.marker([location.latitude, location.longitude]).addTo(map);
+            });
+        }
+    }, [locations]);
 
-//   return (
-//     <div className="col-span-12 rounded-sm border border-stroke bg-white px-7.5 py-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-7">
-//       <h4 className="mb-2 text-xl font-semibold text-black dark:text-white">
-//         Region labels
-//       </h4>
-//       <div className="h-90">
-//         <div id="mapOne" className="mapOne map-btn"></div>
-//       </div>
-//     </div>
-//   );
-// };
+    return <div id="map" style={{ height: '600px', width: '100rem' }} />;
+};
 
-// export default MapOne;
+export default MapComponent;
+

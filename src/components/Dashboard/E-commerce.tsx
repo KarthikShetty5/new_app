@@ -6,9 +6,13 @@ import ChartTwo from "../Charts/ChartTwo";
 import ChatCard from "../Chat/ChatCard";
 import TableOne from "../Tables/TableOne";
 import CardDataStats from "../CardDataStats";
-// import MapOne from "../Maps/MapOne";
+import MapOne from "../Maps/MapOne";
 
 const ECommerce: React.FC = () => {
+  const locations = [
+    { latitude: 12.9716, longitude: 77.5946 },
+    { latitude: 26.9154, longitude: 75.8189 }
+  ];
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
@@ -102,7 +106,7 @@ const ECommerce: React.FC = () => {
         {/* <ChartOne />
         <ChartTwo />
         <ChartThree /> */}
-        {/* <MapOne /> */}
+        <MapOne locations={locations} />
         <div className="col-span-12 xl:col-span-8">
           {/* <TableOne /> */}
         </div>
