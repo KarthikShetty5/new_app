@@ -6,9 +6,11 @@ import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from "next/router";
 
 
 export default function Home() {
+  const router = useRouter()
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -24,7 +26,7 @@ export default function Home() {
           draggable: true,
           progress: undefined,
         });
-        window.location.href = '/auth/signin';
+        router.push('/auth/signin');
       }
     });
     return () => unsubscribe();
