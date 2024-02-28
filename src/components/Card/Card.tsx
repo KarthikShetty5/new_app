@@ -2,7 +2,12 @@
 import React, { useEffect } from 'react'
 import CardDataStats from '../CardDataStats'
 
-const Card = ({ prop }) => {
+
+interface CardProps {
+    prop: string;
+}
+
+const Card: React.FC<CardProps> = ({ prop }) => {
     useEffect(() => {
         console.log(prop)
     })
