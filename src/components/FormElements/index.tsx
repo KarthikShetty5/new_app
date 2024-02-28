@@ -61,8 +61,9 @@ const FormElements: React.FC = () => {
       });
       const dat = await response.json();
       router.push('/chart')
-      console.log(dat)
+      console.log("data is", dat)
     } catch (error) {
+      console.log("error is", error);
       toast.error('Error uploading file !', {
         position: "top-left",
         autoClose: 1500,
