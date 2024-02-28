@@ -10,31 +10,31 @@ import { useRouter } from "next/router";
 
 
 export default function Home() {
-  const router = useRouter()
+  // const router = useRouter()
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("user is there")
-      } else {
-        toast.error('Please login !', {
-          position: "top-left",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        });
-        router.push('/auth/signin');
-      }
-    });
-    return () => unsubscribe();
-  }, []);
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       console.log("user is there")
+  //     } else {
+  //       toast.error('Please login !', {
+  //         position: "top-left",
+  //         autoClose: 1500,
+  //         hideProgressBar: false,
+  //         closeOnClick: true,
+  //         pauseOnHover: true,
+  //         draggable: true,
+  //         progress: undefined,
+  //       });
+  //       router.push('/auth/signin');
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
 
   return (
     <>
-      <ToastContainer
+      {/* <ToastContainer
         position="top-left"
         autoClose={1500}
         hideProgressBar={false}
@@ -44,7 +44,7 @@ export default function Home() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
       <DefaultLayout>
         <ECommerce />
       </DefaultLayout>
