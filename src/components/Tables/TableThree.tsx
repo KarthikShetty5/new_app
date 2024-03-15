@@ -72,20 +72,20 @@ const TableThree: React.FC<TableThreeProps> = ({ prop }) => {
   //   if (packageItem) {
   //     try {
   //       const apiKey = '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';
-        // const response = await axios.post(
-        //   'https://api.openai.com/v1/engines/gpt-3.5-turbo-0301/completions',
-        //   {
-        //     prompt: `Refine the following insights:\n\nCompany: ${packageItem.Company}\nDate: ${packageItem.Date}\nInsights: ${packageItem.Learnings}\n\n`,
-        //     max_tokens: 200,
-        //     n: 1,
-        //   },
-        //   {
-        //     headers: {
-        //       'Content-Type': 'application/json',
-        //       'Authorization': `Bearer ${apiKey}`,
-        //     },
-        //   }
-        // );
+  // const response = await axios.post(
+  //   'https://api.openai.com/v1/engines/gpt-3.5-turbo-0301/completions',
+  //   {
+  //     prompt: `Refine the following insights:\n\nCompany: ${packageItem.Company}\nDate: ${packageItem.Date}\nInsights: ${packageItem.Learnings}\n\n`,
+  //     max_tokens: 200,
+  //     n: 1,
+  //   },
+  //   {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': `Bearer ${apiKey}`,
+  //     },
+  //   }
+  // );
 
   //       if (!response.data || response.data.choices.length === 0) {
   //         throw new Error('Failed to generate refined insights.');
@@ -107,8 +107,6 @@ const TableThree: React.FC<TableThreeProps> = ({ prop }) => {
   // };
 
   const handleAIDownload = async (packageItem: ChartData) => {
-    const apiKey = '452767ea12mshb74b97343375335p128f0ajsn4d2ca9abd7c8';
-
     try {
       const response = await axios.post(
         'https://open-ai21.p.rapidapi.com/conversationgpt35',
@@ -129,7 +127,7 @@ const TableThree: React.FC<TableThreeProps> = ({ prop }) => {
         {
           headers: {
             'content-type': 'application/json',
-            'X-RapidAPI-Key': apiKey,
+            'X-RapidAPI-Key': `${process.env.RAPID_KEY}`,
             'X-RapidAPI-Host': 'open-ai21.p.rapidapi.com',
           },
         }
