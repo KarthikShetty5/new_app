@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation'
 
 const FormElements: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
   const router = useRouter()
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,6 +35,8 @@ const FormElements: React.FC = () => {
       });
       return;
     }
+    setUploading(true);
+
     const storage = getStorage();
     const storageRef = ref(storage, `uploads/${file.name}`);
 
@@ -73,6 +76,8 @@ const FormElements: React.FC = () => {
         draggable: true,
         progress: undefined,
       });
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -118,8 +123,9 @@ const FormElements: React.FC = () => {
       <button
         onClick={handleUpload}
         className="bg-primary text-white px-4 py-2 rounded-md hover:bg-opacity-90 mt-3"
+        disabled={uploading}
       >
-        Upload
+        {uploading ? 'Uploading...' : 'Upload'}
       </button>
     </>
   );
