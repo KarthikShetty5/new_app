@@ -3,20 +3,21 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import 'react-toastify/dist/ReactToastify.css';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from '../../../config/firebase'
 import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from 'next/navigation'
+import { UserAuth } from "@/app/context/AuthContext";
 
 const SignIn: React.FC = () => {
-  const [email, setEmail]: any = useState("");
-  const [password, setPassword]: any = useState();
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const router = useRouter()
+
+  const { googleSignIn, emailSignIn } = UserAuth();
 
   const signInGoogle = async (e: any) => {
     e.preventDefault();
     try {
-      const res = await signInWithPopup(auth, googleProvider);
+      const res = await googleSignIn();
       toast.success('Your are successfully logged in using Google !', { //this is react-toastify which is used to show up notification
         position: "top-left",
         autoClose: 1500,
@@ -38,13 +39,13 @@ const SignIn: React.FC = () => {
         progress: undefined,
       });
     }
-  };
+  }
+
 
   const signIn = async (e: any) => {
     e.preventDefault();
     try {
-      const result = await signInWithEmailAndPassword(auth, email, password);
-      const cred = result.user
+      const result = await emailSignIn(email, password);
       toast.success('Your are successfully logged in !', {
         position: "top-left",
         autoClose: 1500,

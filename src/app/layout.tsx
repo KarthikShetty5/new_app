@@ -6,6 +6,7 @@ import "@/css/style.css";
 import React, { useEffect, useState } from "react";
 import Loader from "@/components/common/Loader";
 import Head from "next/head";
+import { AuthContextProvider } from "./context/AuthContext";
 
 export default function RootLayout({
   children,
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body suppressHydrationWarning={true}>
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossOrigin="" />
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
-          {loading ? <Loader /> : children}
+          <AuthContextProvider>
+            {loading ? <Loader /> : children}
+          </AuthContextProvider>
         </div>
       </body>
       {/* eslint-disable-next-line @next/next/no-sync-scripts */}

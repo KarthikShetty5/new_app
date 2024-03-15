@@ -4,24 +4,24 @@ import Link from "next/link";
 import Image from "next/image";
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer, toast } from 'react-toastify';
-import { Auth, createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { auth, googleProvider } from '../../../config/firebase'
 import { useRouter } from 'next/navigation'
+import { UserAuth } from "@/app/context/AuthContext";
 
 
 const SignUp: React.FC = () => {
 
-    const [email, setEmail]: any = useState("");
-    const [password, setPassword]: any = useState();
-    const [repassword, setRePassword]: any = useState()
-    const [name, setName]: any = useState();
-    const router = useRouter()
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [repassword, setRePassword] = useState<string>("");
+    const [name, setName] = useState<string>("");
+    const { user, googleSignUp, emailSignUp } = UserAuth();
+    const router = useRouter();
 
 
-    const signInGoogle = async (e: any) => {
+    const signUpGoogle = async (e: any) => {
         e.preventDefault();
         try {
-            const res = await signInWithPopup(auth, googleProvider);
+            const res = await googleSignUp();
             toast.success('Your are successfully Signed up using Google !', { //this is react-toastify which is used to show up notification
                 position: "top-left",
                 autoClose: 1500,
@@ -90,7 +90,7 @@ const SignUp: React.FC = () => {
 
         if (password === repassword) {
             try {
-                const result = await createUserWithEmailAndPassword(auth, email, password)
+                const result = await emailSignUp(email, password)
                 console.log('User created:', result);
                 toast.success('SignUp successfull !', { //this is react-toastify which is used to show up notification
                     position: "top-left",
@@ -163,7 +163,7 @@ const SignUp: React.FC = () => {
                 draggable
                 pauseOnHover
             />
-            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-screen">
+            <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                 <div className="flex flex-wrap items-center">
                     <div className="hidden w-full xl:block xl:w-1/2">
                         <div className="px-26 py-17.5 text-center">
@@ -348,7 +348,7 @@ const SignUp: React.FC = () => {
                                     />
                                 </div>
 
-                                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50" onClick={signInGoogle}>
+                                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50" onClick={signUpGoogle}>
                                     <span>
                                         <svg
                                             width="20"

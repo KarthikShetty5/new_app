@@ -6,8 +6,11 @@ import { signOut } from "firebase/auth";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation'
+import { UserAuth } from "@/app/context/AuthContext";
 
 const DropdownUser = () => {
+  const { user } = UserAuth();
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const router = useRouter()
 
@@ -23,7 +26,7 @@ const DropdownUser = () => {
         draggable: true,
         progress: undefined,
       });
-      router.push('/')
+      router.push('/auth/signin')
     } catch (err) {
       toast.error('Failed to logout !', {
         position: "top-center",
@@ -87,10 +90,9 @@ const DropdownUser = () => {
           href="#"
         >
           <span className="hidden text-right lg:block">
-            <span className="block text-sm font-medium text-black dark:text-white">
-              Thomas Anree
+            <span className="block text-lg font-medium text-black dark:text-white">
+              {user?.displayName}
             </span>
-            <span className="block text-xs">UX Designer</span>
           </span>
 
           <span className="h-12 w-12 rounded-full">
