@@ -566,13 +566,13 @@ const locations = [
 
 const MapOne = () => {
     // const jsonData: ChartData[] = JSON.parse(prop);
-    
+
     // useEffect(() => {
-        //     console.log(jsonData, prop)
-        // })
-        
-        // const coordinates = locations.map(place => ({ latitude: place.latitude, longitude: place.longitude }));
-        
+    //     console.log(jsonData, prop)
+    // })
+
+    // const coordinates = locations.map(place => ({ latitude: place.latitude, longitude: place.longitude }));
+
     const mapRef = useRef<L.Map | null>(null);
 
     useEffect(() => {
@@ -592,7 +592,7 @@ const MapOne = () => {
         }
     }, [locations]);
 
-    return <div id="map" style={{ height: '600px', width: '100rem' }} />;
+    return <div id="map" style={{ height: '49rem', width: '90rem' }} />;
 
 };
 
