@@ -49,7 +49,7 @@ const TablesPage = () => {
         ) : (
           <Loader />
         )}
-        <TableTwo />
+        {/* <TableTwo /> */}
       </div>
     </DefaultLayout>
   );

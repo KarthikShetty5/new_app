@@ -40,11 +40,11 @@ const ECommerce: React.FC = () => {
   return (
     <>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        {recent ? (
+        {/* {recent ? (
           <Card prop={recent} />
         ) : (
           <Loader />
-        )}
+        )} */}
 
         {/* <CardDataStats title="Total Profit" total="$45,2K" rate="4.35%" levelUp>
           <svg
@@ -128,7 +128,7 @@ const ECommerce: React.FC = () => {
         <div className="col-span-12 xl:col-span-8">
           {/* <TableOne /> */}
         </div>
-        <ChatCard />
+        {/* <ChatCard /> */}
       </div>
     </>
   );
