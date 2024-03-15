@@ -91,12 +91,12 @@ const SignIn: React.FC = () => {
                   className="hidden dark:block"
                   src={"/images/logo/logo.svg"}
                   alt="Logo"
-                  width={176}
-                  height={32}
+                  width={200}
+                  height={40}
                 />
                 <Image
                   className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
+                  src={"/images/logo/KarthikDB.svg"}
                   alt="Logo"
                   width={176}
                   height={32}
@@ -109,7 +109,7 @@ const SignIn: React.FC = () => {
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5 h-full flex flex-col justify-between">
               <div>
                 <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                  Sign In to NetworkDB
+                  Sign In to KarthikDB
                 </h2>
                 <form>
                   <div className="mb-4">
@@ -231,6 +231,13 @@ const SignIn: React.FC = () => {
                       Don’t have any account?{" "}
                       <Link href="/auth/signup" className="text-primary">
                         Sign Up
+                      </Link>
+                    </p>
+                  </div>
+                  <div className="mt-6 text-center">
+                    <p>
+                      <Link href="/auth/forgot" className="text-primary">
+                        Forgot Password ?{" "}
                       </Link>
                     </p>
                   </div>
