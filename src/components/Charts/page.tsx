@@ -22,7 +22,7 @@ const Chart: React.FC = () => {
   }
 
   async function getyear() {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/year`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/data/other`)
     return res.json()
   }
 
@@ -67,10 +67,10 @@ const Chart: React.FC = () => {
       <div className="flex items-center justify-center h-full">
         {(people || plat || year || desig) ? (
           <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-            {people && <ChartOne prop={people} />}
+            {year && <ChartOne prop={year} />}
             {plat && <ChartFour prop={plat} />}
             {year && <ChartTwo prop={year} />}
-            {desig && <ChartFive prop={desig} />}
+            {/* {desig && <ChartFive prop={desig} />} */}
           </div>
         ) : (
           <div className="loader-container w-full h-screen">

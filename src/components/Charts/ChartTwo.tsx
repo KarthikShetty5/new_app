@@ -1,5 +1,5 @@
 import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface ChartTwoState {
@@ -9,26 +9,28 @@ interface ChartTwoState {
   }[];
 }
 
-interface ChartData {
-  year: string;
-  "Number of people": number;
+interface ChartTwoProps {
+  prop: { timeline_count: TimelineCount };
 }
 
-interface ChartTwoProps {
-  prop: string;
+interface TimelineCount {
+  month_wise_counter: { [month: string]: number };
+  year_wise_counter: { [month: string]: number };
+  month_wise_yearly_counter: { [month: string]: number };
 }
 
 
 const ChartTwo: React.FC<ChartTwoProps> = ({ prop }) => {
-  const jsonData: ChartData[] = JSON.parse(prop);
-  const uniqueYear = Array.from(new Set(jsonData.map((i) => i.year)));
 
-  const categories = uniqueYear.map((year) => {
-    return year;
+  const yearWiseCounter = prop.timeline_count.year_wise_counter;
+
+  const years: string[] = [];
+  const counts: number[] = [];
+
+  Object.entries(yearWiseCounter).forEach(([year, count]) => {
+    years.push(year);
+    counts.push(count);
   });
-
-  const uniqueYearNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
-  )));
 
   const options: ApexOptions = {
     colors: ["#3C50E0", "#80CAEE"],
@@ -72,7 +74,7 @@ const ChartTwo: React.FC<ChartTwoProps> = ({ prop }) => {
     },
 
     xaxis: {
-      categories: categories,
+      categories: years,
     },
     legend: {
       position: "top",
@@ -94,7 +96,7 @@ const ChartTwo: React.FC<ChartTwoProps> = ({ prop }) => {
     series: [
       {
         name: "People",
-        data: uniqueYearNumber,
+        data: counts,
       },
       // {
       //   name: "Revenue",

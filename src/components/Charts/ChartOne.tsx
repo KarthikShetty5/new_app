@@ -11,26 +11,29 @@ interface ChartOneState {
   }[];
 }
 
-interface ChartData {
-  Month: string;
-  "Number of people": number;
-}
 
 interface ChartOneProps {
-  prop: string;
+  prop: { timeline_count: TimelineCount };
+}
+
+interface TimelineCount {
+  month_wise_counter: { [month: string]: number };
+  year_wise_counter: { [month: string]: number };
+  month_wise_yearly_counter: { [month: string]: number };
 }
 
 const ChartOne: React.FC<ChartOneProps> = ({ prop }) => {
+  const yearWiseCounter = prop.timeline_count.month_wise_counter;
 
-  const jsonData: ChartData[] = JSON.parse(prop);
-  const uniqueMonths = Array.from(new Set(jsonData.map((i) => i.Month)));
+  const years: string[] = [];
+  const counts: number[] = [];
 
-  const categories = uniqueMonths.map((month) => {
-    return month.substring(0, 3);
+  Object.entries(yearWiseCounter).forEach(([year, count]) => {
+    years.push(year);
+    counts.push(count);
   });
 
-  const uniqueMonthNumber = Array.from(new Set(jsonData.map((i) => i['Number of people']
-  )));
+  console.log(years, counts);
 
 
   const options: ApexOptions = {
@@ -114,7 +117,7 @@ const ChartOne: React.FC<ChartOneProps> = ({ prop }) => {
     },
     xaxis: {
       type: "category",
-      categories: categories,
+      categories: years,
       axisBorder: {
         show: false,
       },
@@ -137,7 +140,7 @@ const ChartOne: React.FC<ChartOneProps> = ({ prop }) => {
     series: [
       {
         name: "People",
-        data: uniqueMonthNumber,
+        data: counts,
       },
     ],
   });

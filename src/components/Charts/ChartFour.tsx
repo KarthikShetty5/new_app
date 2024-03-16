@@ -10,36 +10,21 @@ interface ChartFourState {
 }
 
 interface ChartFourProps {
-    prop: string;
+    prop: { platform_count: PlatformCount };
 }
 
-interface ChartData {
-    Platform: string;
-    "Number of people": number;
+interface PlatformCount {
+    [platform: string]: number;
 }
 
 const ChartFour: React.FC<ChartFourProps> = ({ prop }) => {
 
-    const jsonData: ChartData[] = JSON.parse(prop);
+    const jsonData: { platform_count: PlatformCount } = prop;
+    const platformCounts: PlatformCount = jsonData.platform_count;
 
-    const allPlatforms: string[] = [];
-    jsonData.forEach((item) => {
-        const platform = item.Platform;
-        if (!allPlatforms.includes(platform)) {
-            allPlatforms.push(platform);
-        } else {
-            allPlatforms.push(platform);
-        }
-    });
-    const uniqueYearNumber: number[] = [];
-    jsonData.forEach((item) => {
-        const number = item['Number of people'];
-        if (!uniqueYearNumber.includes(number)) {
-            uniqueYearNumber.push(number);
-        } else {
-            uniqueYearNumber.push(number);
-        }
-    });
+    const platformNames = Object.keys(platformCounts);
+    const platformCountsArray = platformNames.map((platform) => platformCounts[platform]); // accessing count by platform name
+
 
     const options: ApexOptions = {
         legend: {
@@ -122,7 +107,7 @@ const ChartFour: React.FC<ChartFourProps> = ({ prop }) => {
         },
         xaxis: {
             type: "category",
-            categories: allPlatforms,
+            categories: platformNames,
             axisBorder: {
                 show: false,
             },
@@ -144,7 +129,7 @@ const ChartFour: React.FC<ChartFourProps> = ({ prop }) => {
         series: [
             {
                 name: "People",
-                data: uniqueYearNumber,
+                data: platformCountsArray,
             },
         ],
     });
